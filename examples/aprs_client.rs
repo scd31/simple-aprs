@@ -7,11 +7,8 @@ use simple_aprs::*;
 fn aprs_packet_handler(packet: APRSPacket) {
     match packet.parsed() {
         Ok(parsed) => {
-            println!("Source: {}", parsed.source());
-            match parsed.destination() {
-                Some(destination) => println!("Destination: {}", destination),
-                None => (),
-            }
+            // println!("Source: {}", parsed.from);
+            // println!("Destination: {}", parsed.to);
         }
         Err(err) => {
             println!("Error parsing packet: {}", err);
@@ -36,7 +33,7 @@ fn main() {
         14580,
         callsign.to_string(),
         passcode.to_string(),
-        "r/55/-4/600".to_string(),
+        "r/55/-4/600000".to_string(),
     );
 
     let aprs_is = IS::new(settings, aprs_packet_handler);

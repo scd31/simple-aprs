@@ -1,6 +1,3 @@
-extern crate aprs;
-extern crate fap;
-
 mod codec;
 
 use std::error::Error;
@@ -20,13 +17,8 @@ pub struct APRSPacket {
 }
 
 impl APRSPacket {
-    pub fn parsed(&self) -> Result<Box<dyn aprs::Packet>, Box<dyn Error>> {
-        let raw_packet = self.raw.clone();
-        let parsed = fap::Packet::new(raw_packet);
-        match parsed {
-            Ok(packet) => Ok(Box::new(packet)),
-            Err(err) => Err(Box::new(err)),
-        }
+    pub fn parsed(&self) -> Result<aprs_parser::AprsPacket, aprs_parser::AprsError> {
+        aprs_parser::parse(&self.raw)
     }
 }
 
